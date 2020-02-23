@@ -952,6 +952,102 @@ const IsParticle = superclass => class extends superclass {
   }
 }
 
+const Snaking = superclass => class extends superclass {
+  constructor({ ...args }) {
+    super({ ...args })
+    this.entityTypes = this.entityTypes.concat('SNAKING');
+    this.bodyPositions = [];
+    this.lastDirection = null;
+  }
+
+  createBodyPart (pos) {
+    const Part = pipe(
+      Rendering,
+      Destructable,
+    )(Entity);
+
+    return new Part({
+      pos,
+      durability: 1,
+      defense: 0,
+      // renderer: { character: 'b', ...this.renderer}
+      renderer: {
+        character: 'b',
+        color: '#e6e6e6',
+        background: '#36635b',
+      },
+    }) 
+  }
+
+  addBodyPosition () {
+    const length = this.bodyPositions.length;
+    let lastPosition = null;
+    if (length) {
+      lastPosition = this.bodyPositions[length - 1].pos;
+    } else { // we use the head position to start the body
+      lastPosition = this.pos;
+    }
+    const finalPos = {
+      x: lastPosition.x + (this.lastDirection[0] * -1),
+      y: lastPosition.y + (this.lastDirection[1] * -1),
+    };
+    
+    let bodyPart = this.createBodyPart(finalPos);
+    this.bodyPositions.push(bodyPart)
+
+    // add to map
+    this.game.map[Helper.coordsToString(finalPos)].entities.push(bodyPart);
+  }
+
+  // override render methods
+  move(targetPos) {
+    let success = false;
+    const headPosition = {...this.pos};
+    if (this.game.canOccupyPosition(targetPos, this)) {
+      // set last direction moved
+      const lastDirection = [
+        Math.sign(targetPos.x - this.pos.x),
+        Math.sign(targetPos.y - this.pos.y)
+      ]
+      this.lastDirection = lastDirection
+      console.log(lastDirection);
+      
+      let tile = this.game.map[Helper.coordsToString(this.pos)]
+      this.game.map[Helper.coordsToString(this.pos)] = { ...tile, entities: tile.entities.filter((e) => e.id !== this.id) }
+      this.pos = targetPos
+      this.game.map[Helper.coordsToString(targetPos)].entities.push(this);
+
+      // since head move was successful, move all body parts starting with the tail
+      for (let index = this.bodyPositions.length - 1; index >= 0; index--) {
+        let bodyPart = this.bodyPositions[index];
+        console.log(index);
+        
+        let newPos = null;
+        if (index === 0) { //move this body part to last head position
+          newPos = {
+            x: headPosition.x,
+            y: headPosition.y
+          }
+        } else {
+          newPos = {
+            x: this.bodyPositions[index - 1].pos.x,
+            y: this.bodyPositions[index - 1].pos.y,
+          }
+        }
+        let tile = this.game.map[Helper.coordsToString(bodyPart.pos)]
+        this.game.map[Helper.coordsToString(bodyPart.pos)] = { ...tile, entities: tile.entities.filter((e) => e.id !== bodyPart.id) }
+        bodyPart.pos = {...newPos}
+        this.game.map[Helper.coordsToString(newPos)].entities.push(bodyPart);
+      }
+
+      success = true;
+    }
+    return success;
+  }
+  // override destructable methods
+
+}
+
 export const UI_Actor = pipe(
   Acting, 
   Rendering, 
@@ -998,6 +1094,15 @@ export const RangedBandit = pipe(
   RangedChasing, 
   Destructable,
   Attacking,
+)(Entity);
+
+export const SnakePlayer = pipe(
+  Acting,
+  Rendering,
+  Attacking,
+  Destructable,
+  Snaking,
+  Playing,
 )(Entity);
 
 export const Player = pipe(

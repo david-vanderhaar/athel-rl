@@ -4,6 +4,7 @@ import { activateInventory } from './KeyActions/activateInventory';
 import { activateThrow } from './KeyActions/activateThrow';
 import { walk } from './KeyActions/walk';
 import { addActor } from './KeyActions/addActor';
+import { addBody } from './KeyActions/addBody';
 import { moveCursor } from './KeyActions/moveCursor';
 import { cloneSelf } from './KeyActions/cloneSelf'
 import { pickupRandom } from './KeyActions/pickupRandom'
@@ -33,6 +34,7 @@ export {
   activateThrow,
   walk,
   addActor,
+  addBody,
   moveCursor,
   cloneSelf,
   pickupRandom,
