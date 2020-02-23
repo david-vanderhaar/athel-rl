@@ -1,0 +1,139 @@
+.App {
+  text-align: center;
+  outline: none;
+  background-color: #424242;
+  color: #eee;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+#display {
+  /* overflow: scroll; */
+}
+
+#display:focus {
+  /* outline: none; */
+}
+
+.game_display_container {
+  overflow-x: scroll;
+  border: solid 4px #eee;
+}
+
+.CharacterSelect {
+  margin: auto;
+  width: 300px;
+}
+
+.CharacterSelect__button {
+  display: block;
+  margin: auto;
+  width: 300px;
+}
+
+.UI {
+  text-align: left;
+}
+
+.UI button {
+  display: block;
+}
+
+.Keymap {
+  /* left: 0px; */
+}
+
+.Inventory {
+  /* left: 200px; */
+}
+
+.Equipment {
+  /* left: 400px; */
+}
+
+.Information {
+  /* right: 0; */
+  /* left: 600px; */
+}
+
+.Messages {
+  /* right: 0; */
+  /* left: 600px; */
+  overflow-y: scroll;
+  height: 800px; 
+}
+
+.Messages .Message {
+  width: 100%;
+  text-align: left;
+  display: block;
+  text-overflow: ellipsis;
+  height: unset;
+  transition: background-color .2s ease-out;
+  border-radius: 2px;
+  line-height: 36px;
+  padding: 0 16px;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+
+.Information .Button {
+  display: inline;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Screen Animations */
+.fade-appear {
+  opacity: 0.01;
+}
+
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity .5s ease-in;
+}
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+
+.fade-leave {
+  opacity: 1;
+}
+
+.fade-leave.fade-leave-active {
+  opacity: 0.01;
+  transition: opacity 300ms ease-in;
+
+}
