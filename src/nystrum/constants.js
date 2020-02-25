@@ -18,14 +18,18 @@ export const COLORS = {
 
 export const TILE_KEY = {
   'GROUND': {
-    background: COLORS.black_1,
-    foreground: COLORS.gray_2,
+    background: '#a99b81',
+    foreground: 'white',
+    // background: COLORS.black_1,
+    // foreground: COLORS.gray_2,
     character: '.',
     passable: true,
   },
   'WALL': {
-    background: COLORS.black_1,
-    foreground: COLORS.gray_2,
+    background: '#748363',
+    foreground: 'white',
+    // background: COLORS.black_1,
+    // foreground: COLORS.gray_2,
     character: '#',
     passable: false,
   },

@@ -9,7 +9,7 @@ const getBanditStats = () => {
       renderer: {
         character: Helper.getRandomInArray(['r']),
         color: '#ced5dd',
-        background: '',
+        background: 'black',
       },
       durability: 1,
       attackDamage: 1,
@@ -21,11 +21,11 @@ const getBanditStats = () => {
       renderer: {
         character: Helper.getRandomInArray(['r']),
         color: '#3fc072',
-        background: '',
+        background: 'black',
       },
       durability: 2,
       attackDamage: 1,
-      speed: 200,
+      speed: 100,
       entityClass: RangedBandit
     },
     {
@@ -33,11 +33,11 @@ const getBanditStats = () => {
       renderer: {
         character: Helper.getRandomInArray(['b']),
         color: '#ced5dd',
-        background: '',
+        background: 'black',
       },
       durability: 1,
       attackDamage: 1,
-      speed: 100,
+      speed: 300,
       entityClass: Bandit
     },
     {
@@ -45,11 +45,11 @@ const getBanditStats = () => {
       renderer: {
         character: Helper.getRandomInArray(['b']),
         color: '#3fc072',
-        background: '',
+        background: 'black',
       },
       durability: 2,
       attackDamage: 1,
-      speed: 100,
+      speed: 200,
       entityClass: Bandit
     },
     {
@@ -57,34 +57,10 @@ const getBanditStats = () => {
       renderer: {
         character: Helper.getRandomInArray(['b']),
         color: '#67a1d7',
-        background: '',
+        background: 'black',
       },
       durability: 3,
       attackDamage: 1,
-      speed: 100,
-      entityClass: Bandit
-    },
-    {
-      name: 'Jarod',
-      renderer: {
-        character: Helper.getRandomInArray(['b']),
-        color: '#e16264',
-        background: '',
-      },
-      durability: 1,
-      attackDamage: 5,
-      speed: 300,
-      entityClass: Bandit
-    },
-    {
-      name: 'Bigii',
-      renderer: {
-        character: Helper.getRandomInArray(['b']),
-        color: '#9f62e1',
-        background: '',
-      },
-      durability: 15,
-      attackDamage: 10,
       speed: 100,
       entityClass: Bandit
     },

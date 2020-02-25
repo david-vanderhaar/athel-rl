@@ -1077,7 +1077,10 @@ const Snaking = superclass => class extends superclass {
       super.decreaseDurability(value);
     }
   }
-  // override destructable methods
+
+  getAttackDamage () {
+    return this.bodyParts.length + 1;
+  }
 }
 
 export const UI_Actor = pipe(

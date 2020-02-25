@@ -62,8 +62,10 @@ export class Game {
       this.mode.data.highestLevel = highestLevel
       for (let i = 0; i < Math.pow(this.mode.data.level, 2); i++) {
         addWaveEnemy(this);
-        let apple = Item.apple(this.engine)
-        this.randomlyPlaceActorOnMap(apple, null)
+        let apple_1 = Item.apple(this.engine)
+        this.randomlyPlaceActorOnMap(apple_1, null)
+        let apple_2 = Item.apple(this.engine)
+        this.randomlyPlaceActorOnMap(apple_2, null)
       }
     }
   }

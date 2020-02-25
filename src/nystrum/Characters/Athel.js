@@ -8,15 +8,19 @@ export default function (engine) {
   const keymap = (engine) => {
     return {
       ...createFourDirectionMoveOptions(Keymap.walk, engine),
+      // s: {
+      //   activate: () => Keymap.none(engine),
+      //   label: 'Stay',
+      // },
       // DEV KEYS
-      b: {
-        activate: () => Keymap.addBody(engine),
-        label: 'Add Body Part',
-      },
-      y: {
-        activate: () => Keymap.addActor(engine.game),
-        label: 'Add NPC',
-      },
+      // b: {
+      //   activate: () => Keymap.addBody(engine),
+      //   label: 'Add Body Part',
+      // },
+      // y: {
+      //   activate: () => Keymap.addActor(engine.game),
+      //   label: 'Add NPC',
+      // },
     };
   }
   // instantiate class

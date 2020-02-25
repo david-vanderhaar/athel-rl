@@ -1,7 +1,6 @@
 import * as Helper from '../helper';
 import { Particle } from './entites';
 import { PARTICLE_TEMPLATES } from './constants';
-import RockLee from './Characters/RockLee';
 
 export class Engine {
   constructor({

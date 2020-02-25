@@ -50,14 +50,7 @@ class Title extends React.Component {
             selectedCharacter={this.props.selectedCharacter} 
             setSelectedCharacter={this.props.setSelectedCharacter}
             setActiveScreen={this.props.setActiveScreen}
-        />
-          <button 
-            class='btn' 
-            onClick={() => this.props.setActiveScreen(SCREENS.LEVEL)}
-            disabled={!this.props.selectedCharacter}
-          >
-            Play
-          </button>
+          />
         </div>
       </div>
     );

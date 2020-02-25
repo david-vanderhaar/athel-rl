@@ -57,8 +57,7 @@ class Level extends React.Component {
 
     return (
       <div className="Level">
-        <div className='flow-text'>Chunin Exams</div>
-        <button className='btn' onClick={() => this.props.setActiveScreen(SCREENS.TITLE)}>Quit</button>
+        <div className='flow-text'>Welcome to Beattyville</div>
         <div className='row'>
           <div className='col s8 game_display_container'>
             {Game.DisplayElement(this.presserRef, Game.handleKeyPress, this.state.game.engine)}
@@ -85,6 +84,7 @@ class Level extends React.Component {
             <Messages messages={this.state.game.messages} />
           </div> */}
         </div>
+        <button className='btn' onClick={() => this.props.setActiveScreen(SCREENS.TITLE)}>Quit</button>
       </div>
     );
   }
