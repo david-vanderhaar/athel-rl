@@ -9,10 +9,11 @@ import { cloneDeep, cloneDeepWith } from 'lodash';
 import { MESSAGE_TYPE } from './message';
 
 export class Entity {
-  constructor({ game = null, passable = false}) {
+  constructor({ game = null, name = null, passable = false}) {
     let id = uuid();
     this.entityTypes = ['Entity']
     this.id = id;
+    this.name = name;
     this.game = game;
     this.passable = passable;
     this.active = true;
@@ -952,38 +953,49 @@ const IsParticle = superclass => class extends superclass {
   }
 }
 
+const Part = pipe(
+  Rendering,
+  Destructable,
+)(Entity);
+
+export class SnakePart extends Part {
+  constructor({ parent = null, ...args }) {
+    super({ ...args });
+    this.parent = parent;
+  }
+
+  destroy () {
+    this.parent.shiftBodyParts({...this.parent.pos});
+    this.parent.removeBodyPart(this.id);
+    super.destroy();
+  }
+}
+
 const Snaking = superclass => class extends superclass {
   constructor({ ...args }) {
     super({ ...args })
     this.entityTypes = this.entityTypes.concat('SNAKING');
-    this.bodyPositions = [];
+    this.bodyParts = [];
     this.lastDirection = null;
   }
 
   createBodyPart (pos) {
-    const Part = pipe(
-      Rendering,
-      Destructable,
-    )(Entity);
-
-    return new Part({
+    let bodyPart = new SnakePart({
+      game: this.game,
+      parent: this,
       pos,
       durability: 1,
       defense: 0,
-      // renderer: { character: 'b', ...this.renderer}
-      renderer: {
-        character: 'b',
-        color: '#e6e6e6',
-        background: '#36635b',
-      },
-    }) 
+      renderer: { ...this.renderer, character: 'a' }
+    });
+    return bodyPart;
   }
 
-  addBodyPosition () {
-    const length = this.bodyPositions.length;
+  addBodyPart () {
+    const length = this.bodyParts.length;
     let lastPosition = null;
     if (length) {
-      lastPosition = this.bodyPositions[length - 1].pos;
+      lastPosition = this.bodyParts[length - 1].pos;
     } else { // we use the head position to start the body
       lastPosition = this.pos;
     }
@@ -993,10 +1005,36 @@ const Snaking = superclass => class extends superclass {
     };
     
     let bodyPart = this.createBodyPart(finalPos);
-    this.bodyPositions.push(bodyPart)
+    this.bodyParts.push(bodyPart)
 
     // add to map
     this.game.map[Helper.coordsToString(finalPos)].entities.push(bodyPart);
+  }
+
+  removeBodyPart (id) {
+    this.bodyParts = this.bodyParts.filter((part) => part.id !== id);
+  }
+
+  shiftBodyParts(headPosition) {
+    for (let index = this.bodyParts.length - 1; index >= 0; index--) {
+      let bodyPart = this.bodyParts[index];
+      let newPos = null;
+      if (index === 0) { //move this body part to last head position
+        newPos = {
+          x: headPosition.x,
+          y: headPosition.y
+        }
+      } else {
+        newPos = {
+          x: this.bodyParts[index - 1].pos.x,
+          y: this.bodyParts[index - 1].pos.y,
+        }
+      }
+      let tile = this.game.map[Helper.coordsToString(bodyPart.pos)]
+      this.game.map[Helper.coordsToString(bodyPart.pos)] = { ...tile, entities: tile.entities.filter((e) => e.id !== bodyPart.id) }
+      bodyPart.pos = { ...newPos }
+      this.game.map[Helper.coordsToString(newPos)].entities.push(bodyPart);
+    }
   }
 
   // override render methods
@@ -1010,42 +1048,36 @@ const Snaking = superclass => class extends superclass {
         Math.sign(targetPos.y - this.pos.y)
       ]
       this.lastDirection = lastDirection
-      console.log(lastDirection);
-      
       let tile = this.game.map[Helper.coordsToString(this.pos)]
       this.game.map[Helper.coordsToString(this.pos)] = { ...tile, entities: tile.entities.filter((e) => e.id !== this.id) }
       this.pos = targetPos
       this.game.map[Helper.coordsToString(targetPos)].entities.push(this);
 
-      // since head move was successful, move all body parts starting with the tail
-      for (let index = this.bodyPositions.length - 1; index >= 0; index--) {
-        let bodyPart = this.bodyPositions[index];
-        console.log(index);
-        
-        let newPos = null;
-        if (index === 0) { //move this body part to last head position
-          newPos = {
-            x: headPosition.x,
-            y: headPosition.y
-          }
-        } else {
-          newPos = {
-            x: this.bodyPositions[index - 1].pos.x,
-            y: this.bodyPositions[index - 1].pos.y,
-          }
-        }
-        let tile = this.game.map[Helper.coordsToString(bodyPart.pos)]
-        this.game.map[Helper.coordsToString(bodyPart.pos)] = { ...tile, entities: tile.entities.filter((e) => e.id !== bodyPart.id) }
-        bodyPart.pos = {...newPos}
-        this.game.map[Helper.coordsToString(newPos)].entities.push(bodyPart);
+      let apple = this.game.map[Helper.coordsToString(targetPos)].entities.find((entity) => entity.name === 'Apple')
+      if (apple) {
+        this.addBodyPart();
+        destroyEntity(apple);
       }
+
+      // since head move was successful, move all body parts starting with the tail
+      this.shiftBodyParts(headPosition);
 
       success = true;
     }
     return success;
   }
-  // override destructable methods
 
+  decreaseDurability (value) {
+    const length = this.bodyParts.length
+    if (length) {
+      let part = this.bodyParts[length - 1];
+      this.removeBodyPart(part.id);
+      destroyEntity(part)
+    } else {
+      super.decreaseDurability(value);
+    }
+  }
+  // override destructable methods
 }
 
 export const UI_Actor = pipe(

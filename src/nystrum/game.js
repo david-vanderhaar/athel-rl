@@ -4,6 +4,7 @@ import * as Constant from './constants';
 import * as Helper from '../helper';
 import { addActor as addWaveEnemy } from './Keymap/KeyActions/addActor';
 import * as Message from './message';
+import * as Item from './items';
 import { Display } from './Display/konvaCustom';
 
 const GAME_MODE_TYPES = {WAVE: 0};
@@ -61,6 +62,8 @@ export class Game {
       this.mode.data.highestLevel = highestLevel
       for (let i = 0; i < Math.pow(this.mode.data.level, 2); i++) {
         addWaveEnemy(this);
+        let apple = Item.apple(this.engine)
+        this.randomlyPlaceActorOnMap(apple, null)
       }
     }
   }

@@ -30,7 +30,7 @@ export default function (engine) {
     name: 'Athel',
     actions: [],
     speed: 200,
-    durability: 1,
+    durability: 10,
     keymap: keymap(engine),
   })
 

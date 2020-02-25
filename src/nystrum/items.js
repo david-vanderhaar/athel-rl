@@ -348,17 +348,14 @@ export const sword = (engine) => new Entity.Weapon({
   },
 })
 
-export const test = (engine, pos) => new Entity.Weapon({
+export const apple = (engine, pos) => new Entity.Wall({
   game: engine.game,
-  name: TYPE.SWORD,
+  name: 'Apple',
   passable: true,
-  attackDamage: 1,
   pos,
-  equipmentType: Constant.EQUIPMENT_TYPES.HAND,
   renderer: {
-    // character: '|',
-    character: '🗡️',
-    color: 'white',
-    background: 'lightsteelblue',
+    character: 'o',
+    color: 'red',
+    background: 'brown',
   },
 })
