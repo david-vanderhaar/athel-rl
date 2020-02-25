@@ -1,14 +1,14 @@
 {
   "files": {
     "main.css": "/athel-rl/static/css/main.5b4eeeb0.chunk.css",
-    "main.js": "/athel-rl/static/js/main.23269859.chunk.js",
-    "main.js.map": "/athel-rl/static/js/main.23269859.chunk.js.map",
+    "main.js": "/athel-rl/static/js/main.7b219c22.chunk.js",
+    "main.js.map": "/athel-rl/static/js/main.7b219c22.chunk.js.map",
     "runtime~main.js": "/athel-rl/static/js/runtime~main.80e4a499.js",
     "runtime~main.js.map": "/athel-rl/static/js/runtime~main.80e4a499.js.map",
     "static/js/2.abcdb24a.chunk.js": "/athel-rl/static/js/2.abcdb24a.chunk.js",
     "static/js/2.abcdb24a.chunk.js.map": "/athel-rl/static/js/2.abcdb24a.chunk.js.map",
     "index.html": "/athel-rl/index.html",
-    "precache-manifest.7c47eba239dc2813994fd56a0b7d2085.js": "/athel-rl/precache-manifest.7c47eba239dc2813994fd56a0b7d2085.js",
+    "precache-manifest.218ab56d134e011d62ce2f8b2899e90a.js": "/athel-rl/precache-manifest.218ab56d134e011d62ce2f8b2899e90a.js",
     "service-worker.js": "/athel-rl/service-worker.js",
     "static/css/main.5b4eeeb0.chunk.css.map": "/athel-rl/static/css/main.5b4eeeb0.chunk.css.map"
   }

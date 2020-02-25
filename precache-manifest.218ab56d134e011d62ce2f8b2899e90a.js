@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "6ea5c51316031178b6717d8b2281c3e2",
+    "revision": "24bb3a02967d90e91cc67b42ca91a0ba",
     "url": "/athel-rl/index.html"
   },
   {
-    "revision": "57b45a2296f1ed4aaa9c",
+    "revision": "640383a9763492ce29d4",
     "url": "/athel-rl/static/css/main.5b4eeeb0.chunk.css"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/athel-rl/static/js/2.abcdb24a.chunk.js"
   },
   {
-    "revision": "57b45a2296f1ed4aaa9c",
-    "url": "/athel-rl/static/js/main.23269859.chunk.js"
+    "revision": "640383a9763492ce29d4",
+    "url": "/athel-rl/static/js/main.7b219c22.chunk.js"
   },
   {
     "revision": "5198ffa5c2a7dc570576",
