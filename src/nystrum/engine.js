@@ -84,6 +84,51 @@ export class Engine {
     }
     return true
   }
+  
+  async processRealtime(delay = 200) { // a realtime system that ignores speed
+    let actor = this.actors[this.currentActor]
+    let acting = true;
+    while (acting) {
+      acting = false;
+      if (!actor) break;
+      if (!actor.active) break;
+      let timePassed = 0;
+      let action = actor.getAction(this.game);
+      if (!action) { break; } // if no action given, kick out to UI input
+      timePassed += action.energyCost;
+      while (true) {
+        action.onBefore();
+        let result = await action.perform();
+        if (result.success) {
+          action.onSuccess();
+        } else {
+          action.onFailure();
+        }
+        action.onAfter();
+        if (!await this.processActionFX(action, result.success)) {
+          await Helper.delay(action.processDelay);
+          this.game.draw();
+        }
+        if (!actor.active) break;
+        if (!result.success) break;
+        if (result.alternative === null) break;
+        action = result.alternative;
+      }
+      this.processStatusEffects(timePassed);
+      if (action.interrupt) {
+        acting = false;
+        break;
+      }
+      // acting = false;
+    }
+    this.actors = this.actors.filter((actor) => actor.active)
+    this.currentActor += 1;
+    if (this.currentActor >= this.actors.length) {
+      this.currentActor = 0;
+    }
+    await Helper.delay(delay);
+    return true
+  }
 
   // a turn-based system using speed and Action Points
   // it reorders all actors by energy after every round robin
@@ -118,8 +163,13 @@ export class Engine {
 
   async start() {
     this.isRunning = true;
+    let player = this.actors.find((ac) => ac.entityTypes.includes('PLAYING'))
+    if (player.keymap) {
+      this.game.visibleKeymap = player.keymap;
+    }
     while (this.isRunning) {
-      this.isRunning = await this.processV2();
+      // this.isRunning = await this.processV2();
+      this.isRunning = await this.processRealtime();
     }
     let actor = this.actors[this.currentActor]
     

@@ -60,7 +60,7 @@ class Level extends React.Component {
         <div className='flow-text'>Welcome to Beattyville</div>
         <div className='row'>
           <div className='col s8 game_display_container'>
-            {Game.DisplayElement(this.presserRef, Game.handleKeyPress, this.state.game.engine)}
+            {Game.DisplayElement(this.presserRef, Game.handleRealtimeKeyPress, this.state.game.engine)}
             <Information data={data} />
           </div>
           <div className='col s2'>

@@ -324,6 +324,16 @@ export class Game {
 
 
 /************************** UI ********************************/
+export const handleRealtimeKeyPress = (event, engine) => {
+  let actor = engine.actors.find((ac) => ac.entityTypes.includes('PLAYING'))
+  let keymap = actor.keymap;
+  let code = event.key;
+  if (!(code in keymap)) { return; }
+  keymap[code]['activate']();
+  // engine.start()
+  return;
+}
+
 export const handleKeyPress = (event, engine) => {
   if (!engine.isRunning) {
     let actor = engine.actors[engine.currentActor];
